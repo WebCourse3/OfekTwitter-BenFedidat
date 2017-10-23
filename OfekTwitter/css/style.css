@@ -1,0 +1,36 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #f5f5f5;
+    line-height: 50px; 
+}
+
+form {
+    margin: 20px;
+}
+
+.navbar .navbar-brand > img { 
+    max-height: 40px; 
+}
+
+.userlist * {
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+.userlist {
+    list-style: none;
+} 
+
+.userlist img {
+    height: 120px;
+}
