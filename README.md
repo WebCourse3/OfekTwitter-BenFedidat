@@ -1,1 +1,0 @@
-See the site live @ https://webcourse3.github.io/OfekTwitter-BenFedidat/index.html
