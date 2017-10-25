@@ -1,8 +1,15 @@
 textarea {
     width: 100%;
-    margin: 40px;
+}
+
+form, .tweets {
+    margin-bottom: 100px;
 }
 
 .tweets img {
-    height: 100px;
+    height: 80px;
+}
+
+.tweets .name{
+    font-weight: bold;
 }
