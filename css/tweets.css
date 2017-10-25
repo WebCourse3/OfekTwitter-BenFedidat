@@ -13,3 +13,7 @@ form, .tweets {
 .tweets .name{
     font-weight: bold;
 }
+
+textarea {
+    resize: none;
+}
