@@ -1,11 +1,3 @@
-textarea {
-    width: 100%;
-}
-
-form, .tweets {
-    margin-bottom: 100px;
-}
-
 .tweets img {
     height: 80px;
 }
