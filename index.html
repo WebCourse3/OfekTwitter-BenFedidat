@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">  
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/tweets.css">
+        <script src="js/tweet.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
@@ -28,31 +29,11 @@
 
         <main class="container" role="main" >
             <form>
-                <textarea class="form-control my-3" rows="5" placeholder="tweet text..."></textarea>
-                <input class="btn btn-primary float-right" type="submit" value="Submit">
+                <textarea id="tweetBody" class="form-control my-3" rows="5" placeholder="tweet text..."></textarea>
+                <button type="button" class="btn btn-primary float-right" onclick="submitTweet()">Submit</button>
             </form>
 
-            <ul class="tweets list-unstyled">
-                <li class="media my-3">
-                    <img src="image/1.jpg">
-                    <p class="name">Sir 1 says:</p>
-                    <p>Hello world!</p>
-                </li>
-                <li class="media my-3">
-                    <img src="image/4.jpg">
-                    <p class="name">The Honourable 9 says:</p>
-                    <p>Indeed.</p>
-                </li>
-                <li class="media my-3">
-                    <img src="image/5.jpg">
-                    <p class="name">Lord 5 says:</p>
-                    <p>Mighty fine!</p>
-                </li>
-                <li class="media my-3">
-                    <img src="image/4.jpg">
-                    <p class="name">Rabbi 4 says:</p>
-                    <p>That's not kosher...</p>
-                </li>
+            <ul id="tweets" class="list-unstyled">
             </ul>
         </main>
 

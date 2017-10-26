@@ -6,15 +6,15 @@ form {
     max-height: 40px; 
 }
 
-.userlist * {
+#userlist *, #followeelist * {
     text-align: center;
     margin-bottom: 4px;
 }
 
-.userlist {
+#userlist, #followeelist {
     list-style: none;
 } 
 
-.userlist img {
+#userlist img, #followeelist img  {
     height: 120px;
 }

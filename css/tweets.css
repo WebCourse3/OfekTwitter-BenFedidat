@@ -2,15 +2,15 @@ textarea {
     width: 100%;
 }
 
-form, .tweets {
+form, #tweets {
     margin-bottom: 100px;
 }
 
-.tweets img {
+#tweets img {
     height: 80px;
 }
 
-.tweets .name{
+#tweets .name{
     font-weight: bold;
 }
 
