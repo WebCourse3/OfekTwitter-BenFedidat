@@ -28,13 +28,15 @@
         </nav>
 
         <main class="container" role="main" >
-            <form>
-                <textarea id="tweetBody" class="form-control my-3" rows="5" placeholder="tweet text..."></textarea>
+            <form  class="row my-3">
+                <textarea id="tweetBody" class="form-control" rows="5" placeholder="tweet text..."></textarea>
                 <button type="button" class="btn btn-primary float-right" onclick="submitTweet()">Submit</button>
             </form>
 
-            <ul id="tweets" class="list-unstyled">
-            </ul>
+            <div class="row my-3">
+                <ul id="tweets" class="col list-unstyled">
+                </ul>
+            </div>
         </main>
 
         <footer class="footer">

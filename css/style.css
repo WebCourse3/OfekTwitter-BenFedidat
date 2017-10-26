@@ -14,15 +14,6 @@ body {
     line-height: 50px; 
 }
 
-form {
-    margin: 20px;
-}
-
 .navbar .navbar-brand > img { 
-    max-height: 40px; 
-}
-
-.row {
-    margin-top: 10px;
-    margin-bottom: 10px
+    height: 40px; 
 }

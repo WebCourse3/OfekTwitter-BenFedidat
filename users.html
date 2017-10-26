@@ -18,7 +18,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse " id="navbarNav">
                 <div class="navbar-nav ml-auto">
                     <a class="nav-link" href="users.html">Users</a>
                     <a class="nav-link" href="signin.html">Sign in</a>
@@ -28,23 +28,25 @@
         </nav>
 
         <main class="container" role="main" >
-            <div class="row">
+            <div class="row my-3">
                 <form>
                         <span>Filter by </span>
                         <input type="text"  autocomplete="off" value="" placeholder="user name" id="namefilter">
                         <button class="btn btn-primary" type="button" onclick="filterUsers()">ok</button>
                 </form>
+            </div>
 
-                <div class="col-sm-9">
-                    <div class="container content row" id="userlist">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="container content row text-center" id="userlist">
                     </div>
                 </div>
 
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <p>
                         <b>Followees<b>
                     </p>
-                    <div class="container content" id="followeelist">
+                    <div class="container content row text-center" id="followeelist">
                     </div>
                 </div>
             </div>

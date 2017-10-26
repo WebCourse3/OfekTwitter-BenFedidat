@@ -69,7 +69,7 @@ function appendUser(usersDiv, imagePath, username) {
     //Create the new container div, using an attribute for later fetching
     var userDiv = document.createElement("div");
     userDiv.setAttribute("followingUserDiv", username);
-    userDiv.className = "col-sm-3";
+    userDiv.className = "col-lg-3 col-md-4 col-sm-6 my-2";
 
     //Add pic
     var imageDiv = document.createElement("img");
