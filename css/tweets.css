@@ -1,8 +1,8 @@
-.tweets img {
+#tweets img {
     height: 80px;
 }
 
-.tweets .name{
+#tweets .name{
     font-weight: bold;
 }
 
