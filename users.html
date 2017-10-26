@@ -29,9 +29,9 @@
 
         <main class="container" role="main" >
             <form class="row my-4">
-                <span class="my-auto m-1 col-sm-2 col-lg-1">Filter by </span>
-                <input type="text" class="m-1 form-control col-sm-7 col-lg-4" autocomplete="off" value="" placeholder="user name" id="namefilter">
-                <button class="m-1 btn btn-primary col-sm-2 col-md-1" type="button" onclick="filterUsers()">ok</button>
+                <span class="col col-2 col-lg-1 my-1">Filter by </span>
+                <input type="text" class="col form-control col-9 col-lg-5 my-1" autocomplete="off" 
+                    value="" placeholder="user name filter" oninput="filterUsers(this)">
             </form>
 
             <div class="row">

@@ -55,11 +55,12 @@ function loadUserdiv(usersDiv, isFolloweesOnly, usernameFilter) {
     while (usersDiv.firstChild)
         usersDiv.removeChild(usersDiv.firstChild);
 
-    //Iterate JSON array and add each user to the div, with filter
+    //Iterate JSON array and add each user to the div, with name filter
+    //StackOverflow says loops are better and more readable than filter()
     for (var i = 0; i < usersArray.length; i++) {
         var username = usersArray[i]["username"];
         imagePath = usersArray[i]["image"];
-        if(usernameFilter == "" || username.includes(usernameFilter))
+        if(usernameFilter == "" || username.toLowerCase().includes(usernameFilter.toLowerCase()))
             appendUser(usersDiv, imagePath, username);
     }
 }
@@ -100,10 +101,9 @@ function appendUser(usersDiv, imagePath, username) {
 
 
 //Reloads the users div with a filter
-function filterUsers() {
-    //get users div and reload it with filter
-    var nameFilter = document.getElementById("namefilter").value;
-    loadUsersWithFilter(nameFilter);
+function filterUsers(filterDiv) {
+    //reload users div with filter
+    loadUsersWithFilter(filterDiv.value);
 }
 
 //Toggles between user followed/unfollowed state
