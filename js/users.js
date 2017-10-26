@@ -48,7 +48,7 @@ function loadUserdiv(usersDiv, isFolloweesOnly, usernameFilter) {
             if(followees.includes(users[i]["username"]))
                 usersArray.push(users[i]);
     }
-    else 
+    else
         usersArray = users;
 
     //The DOM way is the fastest to clear the div (and most correct)
@@ -69,7 +69,7 @@ function appendUser(usersDiv, imagePath, username) {
     //Create the new container div, using an attribute for later fetching
     var userDiv = document.createElement("div");
     userDiv.setAttribute("followingUserDiv", username);
-    userDiv.className = "col-lg-3 col-md-4 col-sm-6 my-2";
+    userDiv.className = "my-2 mx-2 mx-sm-3 mx-lg-5";
 
     //Add pic
     var imageDiv = document.createElement("img");
@@ -78,7 +78,8 @@ function appendUser(usersDiv, imagePath, username) {
 
     //Add button (without following status)
     var buttonDiv = document.createElement("div");
-    var buttonElement = document.createElement("button");        
+    buttonDiv.className = "mt-2 mb-1";
+    var buttonElement = document.createElement("button");
     buttonElement.setAttribute("onclick", "toggleFollow(\"" + username + "\")");
     buttonElement.setAttribute("userButton", username);
     buttonElement.innerHTML = username;
@@ -120,6 +121,7 @@ function toggleFollow(username) {
     updateUserFollowingStatus(username);
 }
 
+//Updates a user's following status, both its button and followee div
 function updateUserFollowingStatus(username) {
     //Figure out current status
     var isFollowing = isFollowingUser(username);
@@ -137,7 +139,7 @@ function updateUserFollowingStatus(username) {
         }
     }
 
-    //Add/remove div from followees div        
+    //Add/remove div from followees div
     followeesDiv = document.getElementById("followeelist");
     if(isFollowing){
         //If not already in followee div, fetch from user div and append
@@ -151,7 +153,7 @@ function updateUserFollowingStatus(username) {
         //Fetch followee div, then check if it exists and remove it
         followeeDiv = followeesDiv.querySelector("[followingUserDiv=\"" + username + "\"]");
         if(followeeDiv != null)
-            followeeDiv.remove();        
+            followeeDiv.remove();
     }
 }
 

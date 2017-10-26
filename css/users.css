@@ -1,7 +1,3 @@
-.userlist {
-    list-style: none;
-} 
-
-#userlist img, #followeelist img  {
+#userlist img, #followeelist img {
     height: 120px;
 }

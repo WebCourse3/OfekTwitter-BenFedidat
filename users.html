@@ -28,21 +28,19 @@
         </nav>
 
         <main class="container" role="main" >
-            <div class="row my-3">
-                <form>
-                        <span>Filter by </span>
-                        <input type="text"  autocomplete="off" value="" placeholder="user name" id="namefilter">
-                        <button class="btn btn-primary" type="button" onclick="filterUsers()">ok</button>
-                </form>
-            </div>
+            <form class="row my-4">
+                <span class="my-auto m-1 col-sm-2 col-lg-1">Filter by </span>
+                <input type="text" class="m-1 form-control col-sm-7 col-lg-4" autocomplete="off" value="" placeholder="user name" id="namefilter">
+                <button class="m-1 btn btn-primary col-sm-2 col-md-1" type="button" onclick="filterUsers()">ok</button>
+            </form>
 
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-10">
                     <div class="container content row text-center" id="userlist">
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-2 col-md-2">
                     <p>
                         <b>Followees<b>
                     </p>
@@ -50,7 +48,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
 
         <footer class="footer">
