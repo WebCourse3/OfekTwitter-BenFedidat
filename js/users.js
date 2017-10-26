@@ -15,24 +15,31 @@ var followees = [
     'Bob', 'Elvis', 'Finn'
 ];
 
+//After page load, load all users
+window.onload = loadAll;
+
+//Loads both users and followees, called at page load
 function loadAll() {
     //Load both users and followees div
     loadUsersWithFilter("");
     loadFollowees();
 }
 
+//Loads users list by filter
 function loadUsersWithFilter(usernameFilter) {
     //Get users div and load with filter
     usersDiv = document.getElementById("userlist");
     loadUserdiv(usersDiv, false, usernameFilter);
 }
 
+//Loads followees list
 function loadFollowees(){
     //Get followees div and load
     followeesDiv = document.getElementById("followeelist");
     loadUserdiv(followeesDiv, true, "");
 }
 
+//Loads a users div, with or without followees and username filter
 function loadUserdiv(usersDiv, isFolloweesOnly, usernameFilter) {
     //Fetch users array
     var usersArray = [];
@@ -48,17 +55,18 @@ function loadUserdiv(usersDiv, isFolloweesOnly, usernameFilter) {
     while (usersDiv.firstChild)
         usersDiv.removeChild(usersDiv.firstChild);
 
-    //Iterate JSON array and append message
+    //Iterate JSON array and add each user to the div, with filter
     for (var i = 0; i < usersArray.length; i++) {
-        var imagePath = usersArray[i]["image"];
         var username = usersArray[i]["username"];
+        imagePath = usersArray[i]["image"];
         if(usernameFilter == "" || username.includes(usernameFilter))
             appendUser(usersDiv, imagePath, username);
     }
 }
 
+//Appends a user (with username and image path) to a div
 function appendUser(usersDiv, imagePath, username) {
-    //Create the new tweet, add text and image
+    //Create the new container div, using an attribute for later fetching
     var userDiv = document.createElement("div");
     userDiv.setAttribute("followingUserDiv", username);
     userDiv.className = "col-sm-3";
@@ -68,9 +76,13 @@ function appendUser(usersDiv, imagePath, username) {
     imageDiv.setAttribute('src', imagePath);
     userDiv.appendChild(imageDiv);
 
-    //Add button
+    //Add button (without following status)
     var buttonDiv = document.createElement("div");
-    buttonDiv.appendChild(getFollowButton(username));
+    var buttonElement = document.createElement("button");        
+    buttonElement.setAttribute("onclick", "toggleFollow(\"" + username + "\")");
+    buttonElement.setAttribute("userButton", username);
+    buttonElement.innerHTML = username;
+    buttonDiv.appendChild(buttonElement);
     userDiv.appendChild(buttonDiv);
 
     //Add username
@@ -80,52 +92,70 @@ function appendUser(usersDiv, imagePath, username) {
 
     //Append to users div
     usersDiv.appendChild(userDiv);
+
+    //Update following status
+    updateUserFollowingStatus(username);
 }
 
-function getFollowButton(username) {
-    var isFollowing = isFollowingUser(username);
-    var buttonElement = document.createElement("button");        
-    buttonElement.setAttribute("onclick", "toggleFollow(\"" + username + "\")");
-    buttonElement.setAttribute("userButton", username);
-    
-    if(isFollowing) {
-        buttonElement.className = "btn btn-danger";
-        buttonElement.innerHTML = "unfollow";
-    }
-    else {
-        buttonElement.className = "btn btn-default";
-        buttonElement.innerHTML = "follow";
-    }
-    return buttonElement;
-}
 
+//Reloads the users div with a filter
 function filterUsers() {
     //get users div and reload it with filter
     var nameFilter = document.getElementById("namefilter").value;
     loadUsersWithFilter(nameFilter);
 }
 
+//Toggles between user followed/unfollowed state
 function toggleFollow(username) {
-    //first figure out status
+    //Figure out current status
     var isFollowing = isFollowingUser(username);
 
-    //add/remove user from following array
+    //Add/remove user from followees array
     if(isFollowing)
-        followees.push(user);
+        followees.splice(followees.indexOf(username), 1);
     else
-        followees.splice(followees.indexOf(user), 1);
+        followees.push(username);
+
+    //Update buttons and followee div
+    updateUserFollowingStatus(username);
+}
+
+function updateUserFollowingStatus(username) {
+    //Figure out current status
+    var isFollowing = isFollowingUser(username);
 
     //update button text+color
     var userButtons = document.querySelectorAll("[userButton=\"" + username + "\"]");
     for (var i = 0; i < userButtons.length; i++) {
-        userButtons[i] = getFollowButton(username);
+        if(isFollowing) {
+            userButtons[i].className = "btn btn-danger";
+            userButtons[i].innerHTML = "unfollow";
+        }
+        else {
+            userButtons[i].className = "btn btn-default";
+            userButtons[i].innerHTML = "follow";
+        }
     }
 
-    //add/remove div from followees div
-    if(isFollowing)
-        document.querySelector("[followingUserDiv=\"" + username + "\"]").remove();
+    //Add/remove div from followees div        
+    followeesDiv = document.getElementById("followeelist");
+    if(isFollowing){
+        //If not already in followee div, fetch from user div and append
+        followeeDiv = followeesDiv.querySelector("[followingUserDiv=\"" + username + "\"]");
+        if(followeeDiv == null) {
+            followeeDiv = document.querySelector("[followingUserDiv=\"" + username + "\"]").cloneNode(true);
+            followeesDiv.appendChild(followeeDiv);
+        }
+    }
+    else {
+        //Fetch followee div, then check if it exists and remove it
+        followeeDiv = followeesDiv.querySelector("[followingUserDiv=\"" + username + "\"]");
+        if(followeeDiv != null)
+            followeeDiv.remove();        
+    }
 }
 
+//Iterate over followee array, find followee
 function isFollowingUser(username) {
     //figure out whether following
     var following = false;
@@ -136,5 +166,3 @@ function isFollowingUser(username) {
     }
     return false;
 }
-
-window.onload = loadAll;
