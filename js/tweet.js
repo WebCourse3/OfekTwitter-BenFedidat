@@ -1,50 +1,39 @@
-function loadTweets() {
-    //Get the tweets div
-    tweetDiv = document.getElementById("tweets");
+(function(){
+    
+    var tweets = [
+         {username: 'Bobo', text: 'hello followers!'},
+         {username: 'Elvis', text: 'this exercise is really easy!'},
+         {username: 'Mimi', text: 'hello!'}
+    ]; 
 
-    //The DOM way is the fastest to clear the div (and most correct)
-    while(tweetDiv.firstChild){
-        tweetDiv.removeChild(tweetDiv.firstChild);
+    function loadTweets() {
+        tweetsContainer = document.getElementById("tweets");
+        tweets.forEach(tweet => { 
+            appendTweet(getUserImage(tweet.username), tweet.username, tweet.text);
+        });
     }
 
-    //Iterate JSON array and append message
-    tweets.forEach(function(tweet) { 
-        appendTweet(tweetDiv, getUserImage(tweet.username), tweet.username, tweet.text);
-    });
-}
+    function submitTweet() {
+        var messageTextArea = document.getElementById("tweetBody");
+        var message = messageTextArea.value.replace(/\r?\n/g, '<br />');
+        tweets.push({username: placeholderCurrentUsername, text: message});
+        appendTweet(getUserImage(placeholderCurrentUsername), placeholderCurrentUsername, message);
+        messageTextArea.value = "";
+    }
 
-function submitTweet() {
-    var messageDiv = document.getElementById("tweetBody");
-    var message = messageDiv.value.replace(/\r?\n/g, '<br />');
-    tweets.push({username: placeholderCurrentUsername, text: message});
+    function appendTweet(imagePath, username, message) {
+        var tweetDiv = document.createElement("div");
+        tweetDiv.innerHTML = `
+            <li class="media my-3">
+                <img src="${imagePath}" class="img-thumbnail mr-3">
+                <div class="media-body">
+                    <strong>${username}</strong>
+                    <p>${message}</p>
+                </div>
+            </li>
+            `;
+        document.getElementById("tweets").appendChild(tweetDiv);
+    }
 
-    var tweetsDiv = document.getElementById("tweets");
-    appendTweet(tweetDiv, getUserImage(placeholderCurrentUsername), placeholderCurrentUsername, message);
-    messageDiv.value = "";
-}
-
-function appendTweet(tweetDiv, imagePath, username, message) {
-    // Now create the new tweet, add text and image
-    var currentTweet = document.createElement("li");
-    currentTweet.className = "media my-3";
-
-    //Add pic
-    var imageDiv = document.createElement("img");
-    imageDiv.setAttribute('src', imagePath);
-    imageDiv.className = "img-thumbnail mr-3";
-    currentTweet.appendChild(imageDiv);
-
-    //Add username message
-    var tweetBody = document.createElement("p");
-    tweetBody.className = "media-body";
-    var usernameDiv = document.createElement("p");
-    usernameDiv.className = "name";
-    usernameDiv.innerHTML += username;
-    tweetBody.appendChild(usernameDiv);
-    tweetBody.innerHTML += message;
-    currentTweet.appendChild(tweetBody);
-
-    tweetDiv.appendChild(currentTweet);
-}
-
-window.onload = loadTweets;
+    loadTweets();
+})()

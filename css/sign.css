@@ -1,15 +1,12 @@
 /* Signup form border */
-
 .signupform {
     margin: 0 auto;
 }
-
 legend.group-border {
     width: inherit;
     padding: 0 10px;
     border-bottom: none;
 }
-
 fieldset.group-border {
     border: 1px groove #ddd !important;
     padding: 0 1.4em 1.4em 1.4em !important;
