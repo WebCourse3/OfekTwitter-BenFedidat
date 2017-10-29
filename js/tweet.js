@@ -1,9 +1,3 @@
-var tweets = [
-         {username: 'Bobo', text: 'hello followers!'},
-         {username: 'Elvis', text: 'this exercise is really easy!'},
-         {username: 'Mimi', text: 'I want to go to sleep'}
-    ]; 
-
 function loadTweets() {
     //Get the tweets div
     tweetDiv = document.getElementById("tweets");
@@ -16,16 +10,20 @@ function loadTweets() {
     //Iterate JSON array and append message
     for (var i = 0; i < tweets.length; i++){
         var username = tweets[i]["username"];
+        var imagePath = getUserImage(username);
         var message = tweets[i]["text"];
-        appendTweet(tweetDiv, "image/1.jpg", username, message);
+        appendTweet(tweetDiv, imagePath, username, message);
     }
 }
 
 function submitTweet() {
-    var username = "Ben";
-    var message = document.getElementById("tweetBody").value;
-    tweets.push({username: username, text: message});
-    loadTweets();
+    var messageDiv = document.getElementById("tweetBody");
+    var message = messageDiv.value.replace(/\r?\n/g, '<br />');
+    tweets.push({username: placeholderCurrentUsername, text: message});
+
+    var tweetsDiv = document.getElementById("tweets");
+    appendTweet(tweetDiv, getUserImage(placeholderCurrentUsername), placeholderCurrentUsername, message);
+    messageDiv.value = "";
 }
 
 function appendTweet(tweetDiv, imagePath, username, message) {
@@ -36,6 +34,7 @@ function appendTweet(tweetDiv, imagePath, username, message) {
     //Add pic
     var imageDiv = document.createElement("img");
     imageDiv.setAttribute('src', imagePath);
+    imageDiv.className = "img-thumbnail mr-3";
     currentTweet.appendChild(imageDiv);
 
     //Add username message

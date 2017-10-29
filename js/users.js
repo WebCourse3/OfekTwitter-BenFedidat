@@ -1,20 +1,3 @@
-//Image path and username of each user
-var users = [
-    { image: 'image/1.jpg', username:  'Alice' },
-    { image: 'image/2.jpg', username:  'Bob' },
-    { image: 'image/3.jpg', username:  'Charlie' },
-    { image: 'image/4.jpg', username:  'Dan' },
-    { image: 'image/5.jpg', username:  'Elvis' },
-    { image: 'image/1.jpg', username:  'Finn' },
-    { image: 'image/2.jpg', username:  'Gunther' },
-    { image: 'image/3.jpg', username:  'Hector' }
-];
-
-//Usernames of followees
-var followees = [
-    'Bob', 'Elvis', 'Finn'
-];
-
 //After page load, load all users
 window.onload = loadAll;
 
@@ -70,11 +53,13 @@ function appendUser(usersDiv, imagePath, username) {
     //Create the new container div, using an attribute for later fetching
     var userDiv = document.createElement("div");
     userDiv.setAttribute("followingUserDiv", username);
-    userDiv.className = "my-2 mx-2 mx-sm-3 mx-lg-5";
+    if(usersDiv.id.includes("userlist"))
+        userDiv.className = "col-3";
 
     //Add pic
     var imageDiv = document.createElement("img");
     imageDiv.setAttribute('src', imagePath);
+    imageDiv.className = "img-thumbnail";
     userDiv.appendChild(imageDiv);
 
     //Add button (without following status)
@@ -142,12 +127,10 @@ function updateUserFollowingStatus(username) {
     //Add/remove div from followees div
     followeesDiv = document.getElementById("followeelist");
     if(isFollowing){
-        //If not already in followee div, fetch from user div and append
+        //If not already in followee div, append
         followeeDiv = followeesDiv.querySelector("[followingUserDiv=\"" + username + "\"]");
-        if(followeeDiv == null) {
-            followeeDiv = document.querySelector("[followingUserDiv=\"" + username + "\"]").cloneNode(true);
-            followeesDiv.appendChild(followeeDiv);
-        }
+        if(followeeDiv == null)
+            appendUser(followeesDiv, getUserImage(username), username);
     }
     else {
         //Fetch followee div, then check if it exists and remove it
