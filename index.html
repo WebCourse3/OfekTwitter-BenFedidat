@@ -30,7 +30,7 @@
 
         <main class="container" role="main" >
             <form  class="row m-1 m-md-3">
-                <textarea id="tweetBody" class="mb-2 form-control" rows="5" placeholder="tweet text..." autocomplete="off"></textarea>
+                <textarea id="tweetBody" class="mb-2 form-control" rows="5" placeholder="tweet text..." autocomplete="off" onkeydown="if(event.keyCode == 13) submitTweet()"></textarea>
                 <button type="button" class="btn btn-primary float-right" onclick="submitTweet()">Submit</button>
             </form>
 
