@@ -23,7 +23,7 @@ var users = [
 
 //Usernames of followees
 var followees = [
-    'Bob', 'Elvis', 'Finn'
+    'Bobo', 'Elvis', 'Finn'
 ];
 
 function getUserImage(username) {

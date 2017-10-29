@@ -8,12 +8,9 @@ function loadTweets() {
     }
 
     //Iterate JSON array and append message
-    for (var i = 0; i < tweets.length; i++){
-        var username = tweets[i]["username"];
-        var imagePath = getUserImage(username);
-        var message = tweets[i]["text"];
-        appendTweet(tweetDiv, imagePath, username, message);
-    }
+    tweets.forEach(function(tweet) { 
+        appendTweet(tweetDiv, getUserImage(tweet.username), tweet.username, tweet.text);
+    });
 }
 
 function submitTweet() {

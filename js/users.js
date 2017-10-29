@@ -26,11 +26,8 @@ function loadFollowees(){
 function loadUserdiv(usersDiv, isFolloweesOnly, usernameFilter) {
     //Fetch users array
     var usersArray = [];
-    if(isFolloweesOnly) {
-        for (var i = 0; i < users.length; i++)
-            if(followees.includes(users[i]["username"]))
-                usersArray.push(users[i]);
-    }
+    if(isFolloweesOnly)
+        usersArray = users.filter((user) => followees.includes(user.username));
     else
         usersArray = users;
 
@@ -40,12 +37,9 @@ function loadUserdiv(usersDiv, isFolloweesOnly, usernameFilter) {
 
     //Iterate JSON array and add each user to the div, with name filter
     //StackOverflow says loops are better and more readable than filter()
-    for (var i = 0; i < usersArray.length; i++) {
-        var username = usersArray[i]["username"];
-        imagePath = usersArray[i]["image"];
-        if(usernameFilter == "" || username.toLowerCase().includes(usernameFilter.toLowerCase()))
-            appendUser(usersDiv, imagePath, username);
-    }
+    users
+        .filter((user) => user.username.toLowerCase().includes(usernameFilter.toLowerCase()))
+        .forEach((user) => appendUser(usersDiv, user.image, user.username));
 }
 
 //Appends a user (with username and image path) to a div
@@ -66,6 +60,7 @@ function appendUser(usersDiv, imagePath, username) {
     var buttonDiv = document.createElement("div");
     buttonDiv.className = "mt-2 mb-1";
     var buttonElement = document.createElement("button");
+    buttonElement.className = "btn";
     buttonElement.setAttribute("onclick", "toggleFollow(\"" + username + "\")");
     buttonElement.setAttribute("userButton", username);
     buttonElement.innerHTML = username;
@@ -94,7 +89,7 @@ function filterUsers(filterDiv) {
 //Toggles between user followed/unfollowed state
 function toggleFollow(username) {
     //Figure out current status
-    var isFollowing = isFollowingUser(username);
+    var isFollowing = followees.includes(username);
 
     //Add/remove user from followees array
     if(isFollowing)
@@ -109,7 +104,7 @@ function toggleFollow(username) {
 //Updates a user's following status, both its button and followee div
 function updateUserFollowingStatus(username) {
     //Figure out current status
-    var isFollowing = isFollowingUser(username);
+    var isFollowing = followees.includes(username);
 
     //update button text+color
     var userButtons = document.querySelectorAll("[userButton=\"" + username + "\"]");
@@ -138,16 +133,4 @@ function updateUserFollowingStatus(username) {
         if(followeeDiv != null)
             followeeDiv.remove();
     }
-}
-
-//Iterate over followee array, find followee
-function isFollowingUser(username) {
-    //figure out whether following
-    var following = false;
-    for (var i = 0; i < followees.length; i++) {
-        if (followees[i] == username) {
-            return true;
-        }
-    }
-    return false;
 }
