@@ -1,27 +1,31 @@
 currentTestGroupName = "";
 
 function test_group(name, test_group_function) {
-    document.body.innerHTML += `
-        <div class="container border border-dark my-3">
+    var groupContainer = document.createElement("div");
+    groupContainer.className = "container border border-dark my-3";
+    groupContainer.innerHTML += `
             <h3>${"Test group: " + name}</h3>
-            <table class="tests table table-bordered table-dark testPassed" testGroup="${name}">
+            <table class="tests table table-bordered table-dark testPassed">
                 <thead>
                     <th>Test name</th>
                     <th>Test passed?</th>
                 </thead>
             </table>
-        </div
     `;
-    currentTestGroupName = name;
-    test_group_function();
+    document.body.appendChild(groupContainer);
+
+    assert = function(value, name){
+        addTestCellToGroup(groupContainer.getElementsByTagName('table')[0], name, value);
+    }
+
+    try {
+        test_group_function();
+    } catch(err) {
+        addTestCellToGroup(groupContainer.getElementsByTagName('table')[0], "Test group failed, exception is: " + err, false);
+    }
 }
 
-function assert(value, name) {
-    addTestCellToGroup(name, value);
-}
-
-function addTestCellToGroup(testName, testPassed) {
-    var groupContainer = document.querySelector("[testGroup='" + currentTestGroupName + "']");
+function addTestCellToGroup(groupContainer, testName, testPassed) {
     groupContainer.innerHTML += `
         <tr class="${testPassed?"testPassed":"testFailed"}">
             <td>${testName}</td>
@@ -32,5 +36,4 @@ function addTestCellToGroup(testName, testPassed) {
         groupContainer.classList.remove("testPassed");
         groupContainer.classList.add("testFailed");
     }
-    
 }
