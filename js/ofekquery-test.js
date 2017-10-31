@@ -19,7 +19,7 @@
         assert($(".toremove").elements.length === 2, "divs to remove");
         $(".toremove").each(element => element.remove());
         assert($(".toremove").elements.length === 0, "divs removed after each");
-        var newArray = $(".exampleClass").map(element => { return element.innerHTML + " world"; });
+        // var newArray = $(".exampleClass").map(element => { return element.innerHTML + " world"; });
         var newArray = $(".exampleClass").map(element => { element.setAttribute("style","color:green"); return element.innerHTML + " world"; });
         assert(newArray[1] === "My world", "map +world result (string #2)");
         assert($(".exampleClass").any(element => element.innerHTML === "Hello") === true, "any test");
