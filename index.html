@@ -27,42 +27,18 @@
         </nav>
 
         <main class="container" role="main" >
-            <form class="row my-3">
-                <textarea class="form-control" rows="5" placeholder="tweet text..."></textarea>
-                <input class="btn btn-primary float-right" type="submit" value="Submit">
+            <form  class="row m-1 m-md-3">
+                <textarea id="tweetBody" class="mb-2 form-control" rows="5" placeholder="tweet text..." autocomplete="off" onkeydown="if(event.keyCode == 13) submitTweet()"></textarea>
+                <button type="button" class="btn btn-primary float-right" onclick="submitTweet()">Submit</button>
             </form>
 
             <div class="row my-3">
-                <ul class="col tweets list-unstyled">
-                    <li class="media my-3">
-                        <img src="image/1.jpg">
-                        <p class="name">Sir 1 says:</p>
-                        <p>Hello world!</p>
-                    </li>
-                    <li class="media my-3">
-                        <img src="image/4.jpg">
-                        <p class="name">The Honourable 9 says:</p>
-                        <p>Indeed.</p>
-                    </li>
-                    <li class="media my-3">
-                        <img src="image/5.jpg">
-                        <p class="name">Lord 5 says:</p>
-                        <p>Mighty fine!</p>
-                    </li>
-                    <li class="media my-3">
-                        <img src="image/4.jpg">
-                        <p class="name">Rabbi 4 says:</p>
-                        <p>That's not kosher...</p>
-                    </li>
+                <ul id="tweets" class="col list-unstyled">
                 </ul>
             </div>
         </main>
 
-        <footer class="footer">
-            <div class="container">
-                <div class="text-muted">Ofek Twitter - with Twitter Bootstrap v4</div>
-            </div>
-        </footer>
-
+        <script src="js/global.js"></script>
+        <script src="js/tweet.js"></script>
     </body>
 </html>
