@@ -83,6 +83,53 @@ function OfekQuery(query) {
     return this;
 }
 
+function match(element, filter) {
+    var matching;
+    switch (filter[0]) {
+        case '.':
+            matching = element.classList.contains(filter.substr(1));
+            break;
+        case '#':
+            matching = element.id.includes(filter.substr(1));
+            break;
+        default:
+            matching = element.tagName.toLowerCase() === filter;
+    }
+    if (matching)
+        return element;
+}
+
+function OfekQueryRecursiveInit(query) {
+    if (!query)
+        return;
+    var element = document.getElementsByClassName("container")[0];
+    this.elements = OfekQueryRecursive(query.split(" "), element);
+    return this;
+}
+function OfekQueryRecursive(queryArray, element) {
+    var matching = [];
+    if (match(element, queryArray[0])) {
+        if(queryArray.length === 1)
+            return [element];
+        Array.from(element.children).forEach(child => {
+            OfekQueryRecursive(queryArray.slice(1), child).forEach(match => matching.push(match));
+        });
+    } else {
+        Array.from(element.children).forEach(child => {
+            OfekQueryRecursive(queryArray, child).forEach(match => matching.push(match));
+        });
+    }
+    return matching;
+}
+function OfekQueryRecursiveInit(query) {
+    if (!query)
+        return;
+    var element = document.getElementsByClassName("container")[0];
+    this.elements = OfekQueryRecursive(query.split(" "), element);
+    return this;
+}
+OfekQueryRecursiveInit.prototype = OfekQuery.prototype;
+
 $ = function (query) {
     return new OfekQuery(query);
 }
