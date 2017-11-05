@@ -1,100 +1,72 @@
-(function() {
-    var followees = [
-        'Bobo', 'Elvis', 'Finn'
-    ];
+var followees = [
+    'Bobo', 'Elvis', 'Finn'
+];
 
-    function loadUsers() {
-        usersContainer = document.getElementById("userscontainer");
-        loadUserdiv(usersContainer, false);
-    }
+function loadUsers() {
+    users.forEach(user => appendUser(user.image, user.username));
+}
 
-    function loadUserdiv(usersContainer, isFolloweesOnly) {
-        if(isFolloweesOnly){
-            var usersArray = users.filter(user => followees.includes(user.username)); 
-        }
-        else {
-            var usersArray = users;
-        }
-        usersArray
-            .forEach(user => appendUserByName(usersContainer, user.username));
-    }
-
-    function appendUserByName(usersContainer, username) {
-        users
-            .filter(user => user.username === username)
-            .forEach(user => appendUser(usersContainer, user.image, user.username));
-    }
-
-    function appendUser(usersContainer, imagePath, username) {
-        usersContainer.innerHTML += `
-            <div followinguser="${username}" ${usersContainer.id.includes("userscontainer")?"class=\"col-3\"":""}>
-                <img src="${imagePath}">
-                <div class="mt-2 mb-1">
-                    <button class="btn" onclick="toggleFollow('${username}')" userbutton="${username}"></button>
-                    <p>${username}</p>
-                </div>
+function appendUser(imagePath, username) {
+    var divToAdd = `
+        <div followinguser="${username}" class="user"">
+            <img src="${imagePath}">
+            <div class="mt-2 mb-1">
+                <button class="btn userbutton" onclick="toggleFollow('${username}')" userbutton="${username}"></button>
+                <p>${username}</p>
             </div>
-        `;
-        updateUserFollowingStatus(username);
-    }
+        </div>
+    `;
+    $("#userscontainer").get(0).innerHTML += divToAdd;
+    $("#userscontainer .user").addClass("col-3");
+    $("#followeescontainer").get(0).innerHTML += divToAdd;
+    updateUserFollowingStatus(username);
+}
 
-    function filterUsers(filterDiv) {
-        usernameFilter = filterDiv.value;
-        usersContainer = document.getElementById("userscontainer");
-        users.forEach(user => {
-            userDiv = usersContainer.querySelector("[followinguser=\""+user.username+"\"]");
-            if(user.username.toLowerCase().includes(usernameFilter) && userDiv === null) {
-                appendUserByName(usersContainer, user.username);
+function filterUsers(filterDiv) {
+    usernameFilter = filterDiv.value;
+    $("#userscontainer .user").each(userDiv => {
+        if(userDiv.getAttribute("followinguser").includes(usernameFilter)) {
+            userDiv.classList.remove("hidden");
+        } else {
+            userDiv.classList.add("hidden");
+        }
+    });
+}
+
+function toggleFollow(username) {
+    if(followees.includes(username)) {
+        followees.splice(followees.indexOf(username), 1);
+    } else {
+        followees.push(username);
+    }
+    updateUserFollowingStatus(username);
+}
+
+function updateUserFollowingStatus(username) {
+    updateFollowingButton(username);
+    updateFollowingDivs(username);
+}
+
+function updateFollowingButton(username) {
+    var userButtons = $(".userbutton").filter(element => element.getAttribute("userbutton") === username).each(button =>{
+            if(followees.includes(username)) {
+                button.classList.add("btn-danger");
+                button.innerHTML = "unfollow";
             }
-            else if(!user.username.toLowerCase().includes(usernameFilter) && userDiv !== null) {
-                userDiv.remove();
+            else {
+                button.classList.remove("btn-danger");
+                button.innerHTML = "follow";
             }
         });
-    }
+}
 
-    function toggleFollow(username) {
-        if(followees.includes(username)) {
-            followees.splice(followees.indexOf(username), 1);
-        } else {
-            followees.push(username);
-        }
-        updateUserFollowingStatus(username);
+function updateFollowingDivs(username) {
+    if(followees.includes(username)) {
+        $("#followeescontainer .user").filter(element => element.getAttribute("followinguser") === username).removeClass("hidden");
     }
-
-    function updateUserFollowingStatus(username) {
-        updateFollowingButton(username);
-        updateFollowingDivs(username);
+    else {
+        $("#followeescontainer .user").filter(element => element.getAttribute("followinguser") === username).addClass("hidden");
     }
+}
 
-    function updateFollowingButton(username) {
-        var userButtons = document.querySelectorAll("[userbutton=\"" + username + "\"]");
-        userButtons.forEach(button =>{
-                if(followees.includes(username)) {
-                    button.className = "btn btn-danger";
-                    button.innerHTML = "unfollow";
-                }
-                else {
-                    button.className = "btn btn-default";
-                    button.innerHTML = "follow";
-                }
-            });
-    }
-
-    function updateFollowingDivs(username) {
-        followeesContainer = document.getElementById("followeescontainer");
-        if(followees.includes(username)){
-            followeeDiv = followeesContainer.querySelector("[followinguser=\"" + username + "\"]");
-            if(followeeDiv === null) {
-                appendUser(followeesContainer, getUserImage(username), username);
-            }
-        }
-        else {
-            followeeDiv = followeesContainer.querySelector("[followinguser=\"" + username + "\"]");
-            if(followeeDiv !== null) {
-                followeeDiv.remove();
-            }
-        }
-    }
-
-    loadUsers();
-})()
+loadUsers();
